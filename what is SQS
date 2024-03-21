@@ -1,0 +1,36 @@
+SQS automatically deltes messages that have been in a queue for more than maximum message retention period. The default message retention period is 4 days
+You can set the message retention period to value from 60 seconds to 14 days using the setQueueAttributes action
+
+Standard Queue
+    Default queue type
+    supports unlimited number of transactions per second
+    supports at-least-once message delivery.Occasionally more than one copy of a message moght be delivered out of order
+    provides best effort ordering which ensures that messages are generally delivered in the same order as they are sent. This is not guaranteed
+
+FiFO Queue
+    Order of operations and events is critical or where duplicates cannot be tolerated
+    Exactly once processinf but have a limited number of tensactions per second
+    3000 messages per second with batching
+    300 messages per second. per action
+
+Visibility Timeout
+    You have to get the message, process the message and delete the message within the visibility timeout period. Otherwise this message will be available to other components to proces the message
+
+To create a fifo queue, the name must end with .fifo
+You cannot change the queue type after you create it and you can't convert an existing queue to some other queue type
+
+Delivery delay
+    The amount of time to delay the first delivery of all messages added to this queue
+
+Receive message wait time
+    The maximum amount of time that a long polling receive call will wait for a message to become available before returning an empty response
+
+Message retention and Dead Letter queue
+    When a message is moved to a dead letter queue, the enqueue timestamp remains unchanged
+    It is recommended that the message retention period of dead letter queue should be longer than the retention period of the original queue
+
+When is a message moved to a DLQ?
+    A message is moved to a DLQ after the maxReceiveCount for a message exceeds.
+    This is mentioned in the redrive policy of the source queue
+    To configure the DLQ use re-drive plocy of the source queue
+
